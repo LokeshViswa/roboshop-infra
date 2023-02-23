@@ -1,8 +1,11 @@
-resource "null_resource" "test" {
-  provisioner "local-exec" {
-    command = "echo ${var.env}"
-  }
+module "network" {
+  source = "github.com/LokeshViswa/tf-module-vpc"
+  env    = var.env
+
+  for_each   = var.vpc
+  cidr_block = each.value.cidr_block
 }
+
 #module "vpc" {
 #  source         = "github.com/raghudevopsb70/tf-module-vpc"
 #  env            = var.env
