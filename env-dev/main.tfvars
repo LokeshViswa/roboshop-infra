@@ -19,15 +19,15 @@ subnets = {
     cidr_block        = ["10.0.0.0/24", "10.0.1.0/24"]
     availability_zone = ["us-east-1a", "us-east-1b"]
   }
-  web = {
-
-  }
-  app = {
-
-  }
-  db = {
-
-  }
+#  web = {
+#
+#  }
+#  app = {
+#
+#  }
+#  db = {
+#
+#  }
 }
 #default_vpc_id = "vpc-075435ce9af088bfa"
 #bastion_cidr   = ["172.31.12.243/32"]
