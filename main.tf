@@ -10,11 +10,20 @@ module "vpc" {
   availability_zone    = each.value.availability_zone
 }
 
-#module "subnets" {
-#  source         = "github.com/LokeshViswa/tf-module-subnets"
-#  env            = var.env
+
+
+module "docdb" {
+  source         = "github.com/LokeshViswa/tf-module-docdb"
+  env            = var.env
 #  default_vpc_id = var.default_vpc_id
-#
+
+  for_each   = var.docdb
+  subnet_ids = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), "private_subnet_ids", null), each.value.subnets_name, null), "subnet_ids", null)
+}
+
+output "vpc" {
+  value = module.vpc
+}
 #  for_each          = var.subnets
 #  cidr_block        = each.value.cidr_block
 #  availability_zone = each.value.availability_zone
@@ -25,9 +34,7 @@ module "vpc" {
 #  nat_gw                    = lookup(each.value, "nat_gw", false)
 #}
 
-output "out" {
-  value = module.vpc
-}
+
 
 #module "vpc" {
 #  source         = "github.com/raghudevopsb70/tf-module-vpc"
