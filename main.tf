@@ -77,9 +77,9 @@ module "alb" {
   internal     = each.value.internal
 }
 
-output "vpc" {
-  value = lookup(lookup(lookup(lookup(module.vpc, "main", null), "public_subnets", null), "public", null), "subnet_ids", null)
-}
+#output "vpc" {
+#  value = lookup(lookup(lookup(lookup(module.vpc, "main", null), "public_subnets", null), "public", null), "subnet_ids", null)
+#}
 #  for_each          = var.subnets
 #  cidr_block        = each.value.cidr_block
 #  availability_zone = each.value.availability_zone
