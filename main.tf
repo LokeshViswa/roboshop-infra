@@ -48,7 +48,8 @@ module "elasticache" {
   allow_cidr              = lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)
   num_cache_nodes         = each.value.num_cache_nodes
   node_type               = each.value.node_type
-  engine_version          = each.value.engine_version}
+  engine_version          = each.value.engine_version
+}
 
 module "rabbitmq" {
   source = "github.com/LokeshViswa/tf-module-rabbitmq"
