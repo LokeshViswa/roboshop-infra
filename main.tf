@@ -10,16 +10,16 @@ module "vpc" {
   availability_zone    = each.value.availability_zone
 }
 
+
 module "docdb" {
   source         = "github.com/LokeshViswa/tf-module-docdb"
   env            = var.env
-#  default_vpc_id = var.default_vpc_id
 
-  for_each   = var.docdb
-  subnet_ids = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), "private_subnet_ids", null), each.value.subnets_name, null), "subnet_ids", null)
-  vpc_id     = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_id", null)
-  allow_cidr = lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)
-  engine_version = each.value.engine_version
+  for_each            = var.docdb
+  subnet_ids          = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), "private_subnet_ids", null), each.value.subnets_name, null), "subnet_ids", null)
+  vpc_id              = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_id", null)
+  allow_cidr          = lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)
+  engine_version      = each.value.engine_version
   number_of_instances = each.value.number_of_instances
   instance_class      = each.value.instance_class
 }
@@ -42,14 +42,13 @@ module "elasticache" {
   source = "github.com/LokeshViswa/tf-module-elasticache"
   env    = var.env
 
-  for_each                = var.elasticache
-  subnet_ids              = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), "private_subnet_ids", null), each.value.subnets_name, null), "subnet_ids", null)
-  vpc_id                  = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_id", null)
-  allow_cidr              = lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)
-  num_cache_nodes         = each.value.num_cache_nodes
-  node_type               = each.value.node_type
-  engine_version          = each.value.engine_version
-}
+  for_each        = var.elasticache
+  subnet_ids      = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), "private_subnet_ids", null), each.value.subnets_name, null), "subnet_ids", null)
+  vpc_id          = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_id", null)
+  allow_cidr      = lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)
+  num_cache_nodes = each.value.num_cache_nodes
+  node_type       = each.value.node_type
+  engine_version  = each.value.engine_version}
 
 module "rabbitmq" {
   source = "github.com/LokeshViswa/tf-module-rabbitmq"
