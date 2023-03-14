@@ -97,6 +97,7 @@ module "apps" {
   bastion_cidr     = var.bastion_cidr
 }
 
-output "redis" {
-  value = module.elasticache
+output "rds" {
+  value     = module.rds
+  sensitive = false
 }
