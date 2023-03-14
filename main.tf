@@ -97,7 +97,7 @@ module "apps" {
   bastion_cidr     = var.bastion_cidr
 }
 
-output "rds" {
-  value     = module.rds
-  sensitive = false
-}
+#output "rds" {
+#  value     = module.rds
+#  sensitive = true
+#}
