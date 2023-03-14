@@ -46,10 +46,9 @@ module "elasticache" {
   subnet_ids              = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), "private_subnet_ids", null), each.value.subnets_name, null), "subnet_ids", null)
   vpc_id                  = lookup(lookup(module.vpc, each.value.vpc_name, null), "vpc_id", null)
   allow_cidr              = lookup(lookup(lookup(lookup(var.vpc, each.value.vpc_name, null), "private_subnets", null), "app", null), "cidr_block", null)
-  num_node_groups         = each.value.num_node_groups
-  replicas_per_node_group = each.value.replicas_per_node_group
+  num_cache_nodes         = each.value.num_cache_nodes
   node_type               = each.value.node_type
-}
+  engine_version          = each.value.engine_version}
 
 module "rabbitmq" {
   source = "github.com/LokeshViswa/tf-module-rabbitmq"
@@ -81,6 +80,8 @@ module "alb" {
 module "apps" {
   source = "github.com/LokeshViswa/tf-module-app"
   env    = var.env
+
+  depends_on = [module.docdb, module.rds, module.rabbitmq, module.alb, module.rds]
 
   for_each         = var.apps
   subnet_ids       = lookup(lookup(lookup(lookup(module.vpc, each.value.vpc_name, null), each.value.subnets_type, null), each.value.subnets_name, null), "subnet_ids", null)
