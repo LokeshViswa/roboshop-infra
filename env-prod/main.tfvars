@@ -2,7 +2,7 @@ env            = "prod"
 default_vpc_id = "vpc-09e788ac94f868a2a"
 bastion_cidr   = ["172.31.3.242/32"]
 #monitor_cidr   = ["172.31.9.50/32"]
-hosted_zone    = "lokeshviswa44.online"
+hosted_zone    = "lokesh33.online"
 
 vpc = {
   main = {
